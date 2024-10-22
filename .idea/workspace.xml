@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76796761-ae8d-4476-ae4d-54be74a15b91" name="Changes" comment="Initial Project DTrack Z Prime" />
+    <list default="true" id="76796761-ae8d-4476-ae4d-54be74a15b91" name="Changes" comment="Initial Project DTrack Z Prime">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -120,7 +123,7 @@
       <workItem from="1729633122311" duration="650000" />
       <workItem from="1729633786024" duration="58000" />
       <workItem from="1729633849788" duration="161000" />
-      <workItem from="1729634250850" duration="329000" />
+      <workItem from="1729634250850" duration="699000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Project DTrack">
       <option name="closed" value="true" />
