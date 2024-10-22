@@ -4,30 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76796761-ae8d-4476-ae4d-54be74a15b91" name="Changes" comment="Initial Project DTrack Z Prime">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/e3d3ba81-2751-456e-9c5e-22c333cc79f9.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/e3d3ba81-2751-456e-9c5e-22c333cc79f9.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/migrations/0002_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/approval/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/certificates/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dtrack/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dtrack/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventory/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification_templates/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notifications/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notifications/migrations/0002_notificationhistory_delete_recordedmessage_and_more.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/profiles/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/qr_generator/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/support/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/task_scheduler/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/twilio_app.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/twilio_app/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/twilio_app/migrations/0002_alter_twiliomessagelog_status_and_more.py" beforeDir="false" />
-    </list>
+    <list default="true" id="76796761-ae8d-4476-ae4d-54be74a15b91" name="Changes" comment="Initial Project DTrack Z Prime" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -143,6 +120,7 @@
       <workItem from="1729633122311" duration="650000" />
       <workItem from="1729633786024" duration="58000" />
       <workItem from="1729633849788" duration="161000" />
+      <workItem from="1729634250850" duration="329000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Project DTrack">
       <option name="closed" value="true" />
