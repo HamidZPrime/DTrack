@@ -1,18 +1,23 @@
 from pathlib import Path
 import os
 import environ
+import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Initialize environment variables
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-SECRET_KEY = 'django-insecure-6sb+@gbt#ur-#q$!s%v3wg4g(2*ez+y&@x_dv5x$5fb#1pp-py'
+SECRET_KEY = env('SECRET_KEY', default='your-backup-secret-key')
 
-DEBUG = True
+# Determine the environment (development or production)
+DEBUG = env.bool('DEBUG', default=True)
 
-ALLOWED_HOSTS = []
+# Allowed hosts configuration
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 
+# Installed applications
 INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,9 +50,9 @@ INSTALLED_APPS = [
     'profiles',
     'notification_templates',
     'twilio_app'
-
 ]
 
+# Middleware configuration
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -57,10 +62,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'dtrack.urls'
 
+# Template configuration
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -79,13 +86,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dtrack.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# Database configuration for both local and production using PostgreSQL
+if DEBUG:
+    DATABASES = {
+        'default': dj_database_url.parse(env('LOCAL_DATABASE_URL'))
     }
-}
+else:
+    DATABASES = {
+        'default': dj_database_url.parse(env('DATABASE_URL'))
+    }
 
+# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -101,6 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Internationalization and localization settings
 LANGUAGE_CODE = 'en-us'
 
 LANGUAGES = [
@@ -120,22 +132,26 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_URL = 'static/'
+# Static files configuration
+STATIC_URL = '/static/'
+
+# Additional static files configuration for Heroku
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
-# Email Configuration for Testing
+# Email configuration for testing
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'webmaster@localhost'
 
-# TWILIO Configuration
-TWILIO_ACCOUNT_SID = env("TWILIO_ACCOUNT_SID")
-TWILIO_AUTH_TOKEN = env("TWILIO_AUTH_TOKEN")
-TWILIO_PHONE_NUMBER = env("TWILIO_PHONE_NUMBER")
+# Twilio configuration
+TWILIO_ACCOUNT_SID = env("TWILIO_ACCOUNT_SID", default=None)
+TWILIO_AUTH_TOKEN = env("TWILIO_AUTH_TOKEN", default=None)
+TWILIO_PHONE_NUMBER = env("TWILIO_PHONE_NUMBER", default=None)
 
 if not all([TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER]):
     raise ValueError("Please set all required Twilio credentials in your environment variables.")
-
-
