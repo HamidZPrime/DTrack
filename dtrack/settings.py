@@ -1,7 +1,6 @@
 from pathlib import Path
 import os
 import environ
-import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -86,15 +85,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dtrack.wsgi.application'
 
-# Database configuration for both local and production using PostgreSQL
-if DEBUG:
-    DATABASES = {
-        'default': dj_database_url.parse(env('LOCAL_DATABASE_URL'))
+# Database configuration without dj_database_url
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST', default='localhost'),
+        'PORT': env('DB_PORT', default='5432'),
     }
-else:
-    DATABASES = {
-        'default': dj_database_url.parse(env('DATABASE_URL'))
-    }
+}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
