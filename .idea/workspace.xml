@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="76796761-ae8d-4476-ae4d-54be74a15b91" name="Changes" comment="Initial Project DTrack Z Prime">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dtrack/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dtrack/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,12 +21,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/HamidZPrime/DTrack&quot;,
-    &quot;accountId&quot;: &quot;3ae20754-3b82-4ac6-b633-2fad03c393c7&quot;
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "HamidZPrime"
   }
-}</component>
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/HamidZPrime/DTrack.git",
+    "accountId": "3ae20754-3b82-4ac6-b633-2fad03c393c7"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -37,7 +46,9 @@
   "keyToString": {
     "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
     "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/Hamid/Development/Python/Django/dtrack",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -103,6 +114,8 @@
       <workItem from="1729622618003" duration="1029000" />
       <workItem from="1729623666751" duration="3800000" />
       <workItem from="1729627555550" duration="556000" />
+      <workItem from="1729628779088" duration="925000" />
+      <workItem from="1729629726497" duration="442000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Project DTrack">
       <option name="closed" value="true" />
