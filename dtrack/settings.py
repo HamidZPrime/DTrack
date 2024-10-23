@@ -14,7 +14,7 @@ SECRET_KEY = env('SECRET_KEY', default='0032878234rhjfyui878576UHBHGYFTYRUYGKBGH
 DEBUG = env.bool('DEBUG', default=True)
 
 # Allowed hosts configuration
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[]) + ['dtrack.zprime.ai']
 
 # Installed applications
 INSTALLED_APPS = [
