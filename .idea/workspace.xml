@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76796761-ae8d-4476-ae4d-54be74a15b91" name="Changes" comment="Account Enhancement DTrack Z Prime">
-      <change beforePath="$PROJECT_DIR$/accounts/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/models.py" afterDir="false" />
-    </list>
+    <list default="true" id="76796761-ae8d-4476-ae4d-54be74a15b91" name="Changes" comment="Account Enhancement DTrack Z Prime" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -132,7 +130,7 @@
       <workItem from="1729686199119" duration="522000" />
       <workItem from="1729710424710" duration="22000" />
       <workItem from="1729710450606" duration="102000" />
-      <workItem from="1729710558212" duration="4788000" />
+      <workItem from="1729710558212" duration="5364000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Project DTrack">
       <option name="closed" value="true" />
@@ -174,7 +172,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729715007680</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Account Enhancement DTrack Z Prime">
+      <option name="closed" value="true" />
+      <created>1729715357634</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1729715357634</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
