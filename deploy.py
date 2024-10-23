@@ -21,6 +21,12 @@ def git_add_commit_push(message="Update from script"):
     run_command("git push origin main")
 
 
+def collect_static():
+    print("Collecting static files...")
+    # Collect static files
+    run_command("python manage.py collectstatic --noinput")
+
+
 def deploy_to_heroku():
     # Push to Heroku
     run_command("git push heroku main")
@@ -28,5 +34,12 @@ def deploy_to_heroku():
 
 if __name__ == "__main__":
     commit_message = input("Enter commit message: ")
+
+    # Step 1: Collect static files
+    collect_static()
+
+    # Step 2: Add, commit, and push changes
     git_add_commit_push(commit_message)
+
+    # Step 3: Deploy to Heroku
     deploy_to_heroku()
