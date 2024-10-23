@@ -11,7 +11,7 @@ class SupplierQRAdmin(admin.ModelAdmin):
     """
     list_display = ('supplier', 'qr_token', 'get_qr_code_image', 'created_at')
     search_fields = ('supplier__email', 'supplier__first_name', 'supplier__last_name', 'qr_token')
-    readonly_fields = ('qr_token', 'get_qr_code_image', 'created_at')
+    readonly_fields = ('qr_code_image', 'qr_token', 'get_qr_code_image', 'created_at')
 
     def get_qr_code_image(self, obj):
         """
@@ -21,6 +21,13 @@ class SupplierQRAdmin(admin.ModelAdmin):
             return format_html(f'<img src="{obj.qr_code_image.url}" width="100" height="100" />')
         return _("No QR Code")
     get_qr_code_image.short_description = _("QR Code Image")
+
+    def save_model(self, request, obj, form, change):
+        """
+        Override save_model to automatically generate QR code image upon save.
+        """
+        obj.generate_qr_code()
+        super().save_model(request, obj, form, change)
 
 
 @admin.register(ProductQR)
@@ -31,7 +38,7 @@ class ProductQRAdmin(admin.ModelAdmin):
     """
     list_display = ('supplier', 'product_id', 'qr_token', 'get_qr_code_image', 'created_at')
     search_fields = ('supplier__email', 'supplier__first_name', 'supplier__last_name', 'product_id', 'qr_token')
-    readonly_fields = ('qr_token', 'get_qr_code_image', 'created_at')
+    readonly_fields = ('qr_code_image', 'qr_token', 'get_qr_code_image', 'created_at')
 
     def get_qr_code_image(self, obj):
         """
@@ -41,6 +48,13 @@ class ProductQRAdmin(admin.ModelAdmin):
             return format_html(f'<img src="{obj.qr_code_image.url}" width="100" height="100" />')
         return _("No QR Code")
     get_qr_code_image.short_description = _("QR Code Image")
+
+    def save_model(self, request, obj, form, change):
+        """
+        Override save_model to automatically generate QR code image upon save.
+        """
+        obj.generate_qr_code()
+        super().save_model(request, obj, form, change)
 
 
 @admin.register(CertificateQR)
@@ -51,7 +65,7 @@ class CertificateQRAdmin(admin.ModelAdmin):
     """
     list_display = ('supplier', 'certificate_id', 'qr_token', 'get_qr_code_image', 'created_at')
     search_fields = ('supplier__email', 'supplier__first_name', 'supplier__last_name', 'certificate_id', 'qr_token')
-    readonly_fields = ('qr_token', 'get_qr_code_image', 'created_at')
+    readonly_fields = ('qr_code_image', 'qr_token', 'get_qr_code_image', 'created_at')
 
     def get_qr_code_image(self, obj):
         """
@@ -61,3 +75,10 @@ class CertificateQRAdmin(admin.ModelAdmin):
             return format_html(f'<img src="{obj.qr_code_image.url}" width="100" height="100" />')
         return _("No QR Code")
     get_qr_code_image.short_description = _("QR Code Image")
+
+    def save_model(self, request, obj, form, change):
+        """
+        Override save_model to automatically generate QR code image upon save.
+        """
+        obj.generate_qr_code()
+        super().save_model(request, obj, form, change)
