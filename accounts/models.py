@@ -1,3 +1,5 @@
+# accounts/models.py
+
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
@@ -78,7 +80,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         choices=settings.LANGUAGES,
     )
     date_joined = models.DateTimeField(_("Date Joined"), default=timezone.now)
-    last_login = models.DateTimeField(_("Last Login"), auto_now=True)
+    # Removed the custom 'last_login' field to inherit from AbstractBaseUser
 
     email_verified = models.BooleanField(_("Email Verified"), default=False)
     profile_complete = models.BooleanField(_("Profile Complete"), default=False)
