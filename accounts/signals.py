@@ -97,13 +97,20 @@ def log_user_verification(sender, user, timestamp, **kwargs):
 @receiver(post_save)
 def log_generic_save(sender, instance, created, **kwargs):
     """Generic logging for any model's save event."""
-    if sender._meta.app_label not in ['auth', 'sessions', 'contenttypes']:  # Exclude Django core models
+    # Exclude Django core models and models that don't require logging
+    if sender._meta.app_label not in ['auth', 'sessions', 'contenttypes', 'admin'] and not hasattr(instance, 'exclude_logging'):
         try:
             action = f"{sender._meta.verbose_name.title()} created" if created else f"{sender._meta.verbose_name.title()} updated"
+            user = getattr(instance, 'user', None)
+
+            # Ensure there's a user context; skip logging if not
+            if not user:
+                return
+
             log_activity(
-                user=getattr(instance, 'user', None),
+                user=user,
                 action=action,
-                additional_data={"model": instance._meta.model_name, "instance_id": instance.pk}
+                additional_data={"model": sender._meta.model_name, "instance_id": instance.pk}
             )
         except ObjectDoesNotExist:
             logger.warning(f"User reference not found in instance {instance} for model {sender}")
@@ -114,13 +121,20 @@ def log_generic_save(sender, instance, created, **kwargs):
 @receiver(post_delete)
 def log_generic_delete(sender, instance, **kwargs):
     """Generic logging for any model's delete event."""
-    if sender._meta.app_label not in ['auth', 'sessions', 'contenttypes']:  # Exclude Django core models
+    # Exclude Django core models and models that don't require logging
+    if sender._meta.app_label not in ['auth', 'sessions', 'contenttypes', 'admin'] and not hasattr(instance, 'exclude_logging'):
         try:
             action = f"{sender._meta.verbose_name.title()} deleted"
+            user = getattr(instance, 'user', None)
+
+            # Ensure there's a user context; skip logging if not
+            if not user:
+                return
+
             log_activity(
-                user=getattr(instance, 'user', None),
+                user=user,
                 action=action,
-                additional_data={"model": instance._meta.model_name, "instance_id": instance.pk}
+                additional_data={"model": sender._meta.model_name, "instance_id": instance.pk}
             )
         except ObjectDoesNotExist:
             logger.warning(f"User reference not found in instance {instance} for model {sender}")

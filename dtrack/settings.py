@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-SECRET_KEY = env('SECRET_KEY', default='your-backup-secret-key')
+SECRET_KEY = env('SECRET_KEY', default='0032878234rhjfyui878576UHBHGYFTYRUYGKBGHWFBVWY43')
 
 # Determine the environment (development or production)
 DEBUG = env.bool('DEBUG', default=True)
