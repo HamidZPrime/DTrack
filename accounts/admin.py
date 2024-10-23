@@ -5,7 +5,6 @@ from .models import CustomUser, OperatorPermission, UserActivityLog
 from .utils import log_activity
 from profiles.models import Profile
 
-
 # Inline Profile Admin within the CustomUserAdmin
 class ProfileInline(admin.StackedInline):
     model = Profile
@@ -38,22 +37,23 @@ class CustomUserAdmin(BaseUserAdmin):
     filter_horizontal = ('groups', 'user_permissions')
 
     def save_model(self, request, obj, form, change):
-        if change:
-            action = f"User {obj.email} updated by {request.user.email}"
-        else:
-            action = f"User {obj.email} created by {request.user.email}"
+        is_new = not obj.pk
+        super().save_model(request, obj, form, change)
 
+        # Create a profile for new users after they are saved
+        if is_new and obj.role == 'supplier':
+            Profile.objects.create(user=obj)
+
+        action = f"User {obj.email} {'updated' if change else 'created'} by {request.user.email}"
         log_activity(
             user=request.user,
             action=action,
             additional_data={'user': obj.email},
             ip_address=request.META.get('REMOTE_ADDR')
         )
-        super().save_model(request, obj, form, change)
 
     def delete_model(self, request, obj):
         action = f"User {obj.email} deleted by {request.user.email}"
-
         log_activity(
             user=request.user,
             action=action,
@@ -64,22 +64,3 @@ class CustomUserAdmin(BaseUserAdmin):
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
-
-
-# Register the OperatorPermission model
-@admin.register(OperatorPermission)
-class OperatorPermissionAdmin(admin.ModelAdmin):
-    list_display = ('operator', 'get_permissions', 'view_only')
-    search_fields = ('operator__email',)
-    filter_horizontal = ('app_level_permissions',)
-
-    def get_permissions(self, obj):
-        return ", ".join([perm.name for perm in obj.app_level_permissions.all()])
-    get_permissions.short_description = "App-Level Permissions"
-
-
-# Register the UserActivityLog model
-@admin.register(UserActivityLog)
-class UserActivityLogAdmin(admin.ModelAdmin):
-    list_display = ('user', 'action', 'timestamp', 'ip_address')
-    search_fields = ('user__email', 'action')
