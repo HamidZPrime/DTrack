@@ -63,11 +63,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         _("Role"), max_length=50, choices=ROLE_CHOICES, default="enduser"
     )
     first_name = models.CharField(_("First Name"), max_length=50, blank=True)
-    last_name = models.CharField(_("Last Name"), max_length=50, blank=True)
+    last_name = models.CharField(
+        _("Last Name"), max_length=50, blank=True, null=True
+    )
     phone_number = models.CharField(
         _("Phone Number"),
         max_length=15,
         blank=True,
+        null=True,  # Allow NULL values in the database
         validators=[RegexValidator(r'^\+?1?\d{9,15}$', _("Enter a valid phone number."))],
     )
     is_active = models.BooleanField(_("Active"), default=False)
@@ -80,7 +83,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         choices=settings.LANGUAGES,
     )
     date_joined = models.DateTimeField(_("Date Joined"), default=timezone.now)
-    # Removed the custom 'last_login' field to inherit from AbstractBaseUser
 
     email_verified = models.BooleanField(_("Email Verified"), default=False)
     profile_complete = models.BooleanField(_("Profile Complete"), default=False)
@@ -133,41 +135,16 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         super().save(*args, **kwargs)
 
 
-# Signals for CustomUser
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-
-
-@receiver(post_save, sender=CustomUser)
-def handle_user_post_save(sender, instance, created, **kwargs):
-    if instance.is_superuser and not instance.is_active:
-        instance.is_active = True
-        instance.save(update_fields=['is_active'])
-
-    if instance.role == "supplier":
-        instance.check_certificate_expiration()
-
-    if instance.role in ["supplier", "operator", "enduser"] and instance.approval_status == "approved":
-        if not instance.is_approved:
-            instance.is_approved = True
-            instance.save(update_fields=['is_approved'])
-
-    if instance.role == "supplier" and instance.is_approved and not instance.supplier_qr:
-        from qr_generator.models import SupplierQR
-
-        supplier_qr = SupplierQR.objects.create(supplier=instance)
-        instance.supplier_qr = supplier_qr
-        instance.save(update_fields=['supplier_qr'])
-
-
 def check_certificate_expiration(self) -> None:
     if self.role == "supplier":
         expired_certificates = self.certificate_set.filter(
             expiry_date__lt=timezone.now().date(), approved=True
         ).exists()
 
-        self.is_active = not expired_certificates
-        self.save(update_fields=['is_active'])
+        new_is_active = not expired_certificates
+        if self.is_active != new_is_active:
+            self.is_active = new_is_active
+            self.save(update_fields=['is_active'])
 
 
 CustomUser.check_certificate_expiration = check_certificate_expiration
@@ -251,3 +228,40 @@ class UserActivityLog(models.Model):
 
     def __str__(self) -> str:
         return f"Activity by {self.user.email} on {self.timestamp}"
+
+
+# Signals for CustomUser
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+@receiver(post_save, sender=CustomUser)
+def handle_user_post_save(sender, instance, created, **kwargs):
+    if instance.is_superuser and not instance.is_active:
+        instance.is_active = True
+        instance.save(update_fields=['is_active'])
+
+    if instance.role == "supplier":
+        instance.check_certificate_expiration()
+
+    if instance.role in ["supplier", "operator", "enduser"] and instance.approval_status == "approved":
+        if not instance.is_approved:
+            instance.is_approved = True
+            instance.save(update_fields=['is_approved'])
+
+    if instance.role == "supplier" and instance.is_approved and not instance.supplier_qr:
+        from qr_generator.models import SupplierQR
+
+        supplier_qr = SupplierQR.objects.create(supplier=instance)
+        instance.supplier_qr = supplier_qr
+        instance.save(update_fields=['supplier_qr'])
+
+
+@receiver(post_save, sender=CustomUser)
+def log_user_save(sender, instance, created, **kwargs):
+    action = "created" if created else "updated"
+    UserActivityLog.objects.create(
+        user=instance,
+        action=f"User {instance.email} {action}",
+        ip_address=None,  # Adjust this if you have access to the IP address
+        additional_data={"user_id": instance.id},
+    )

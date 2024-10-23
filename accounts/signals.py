@@ -1,5 +1,3 @@
-# signals.py
-
 import logging
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.db.models.signals import post_save, post_delete
@@ -25,7 +23,7 @@ def _get_client_ip(request):
     return client_ip
 
 @receiver(user_logged_in)
-def log_user_login(_sender, request, user, **_kwargs):
+def log_user_login(sender, request, user, **kwargs):
     """
     Log when a user logs in.
     """
@@ -42,7 +40,7 @@ def log_user_login(_sender, request, user, **_kwargs):
         logger.error(f"Error logging user login: {ex}")
 
 @receiver(user_logged_out)
-def log_user_logout(_sender, request, user, **_kwargs):
+def log_user_logout(sender, request, user, **kwargs):
     """
     Log when a user logs out.
     """
@@ -59,7 +57,7 @@ def log_user_logout(_sender, request, user, **_kwargs):
         logger.error(f"Error logging user logout: {ex}")
 
 @receiver(post_save, sender=CustomUser)
-def log_user_save(_sender, instance, created, **_kwargs):
+def log_user_save(sender, instance, created, **kwargs):
     """
     Log when a user is created or updated.
     """
@@ -74,7 +72,7 @@ def log_user_save(_sender, instance, created, **_kwargs):
         logger.error(f"Error logging user save: {ex}")
 
 @receiver(post_delete, sender=CustomUser)
-def log_user_delete(_sender, instance, **_kwargs):
+def log_user_delete(sender, instance, **kwargs):
     """
     Log when a user is deleted.
     """

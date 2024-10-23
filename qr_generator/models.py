@@ -1,15 +1,12 @@
-# qr_generator/models.py
-
 from django.db import models
-from django.utils.translation import (
-    gettext_lazy as _,
-)  # Import gettext_lazy for translation
+from django.utils.translation import gettext_lazy as _
 from accounts.models import CustomUser
 from approval.models import ApprovalStatus  # Import approval status choices
 import qrcode
 from io import BytesIO
 from django.core.files import File
 import uuid
+import os
 
 
 class SupplierQR(models.Model):
@@ -32,21 +29,28 @@ class SupplierQR(models.Model):
     )
     created_at = models.DateTimeField(_("Created At"), auto_now_add=True)
 
-    def generate_qr_code(self):
+    def generate_qr_code(self, force_recreate=False):
         """Generates a QR code for the supplier's encrypted or tokenized URL if approved."""
-        if self.supplier.approval_status == ApprovalStatus.APPROVED:
-            qr_content = (
-                f"/supplier/{self.qr_token}/"  # Use a tokenized URL for security
+        if self.supplier.approval_status == ApprovalStatus.APPROVED and (force_recreate or not self.qr_code_image):
+            qr_content = f"/supplier/{self.qr_token}/"  # Use a tokenized URL for security
+            qr = qrcode.QRCode(
+                version=1,
+                error_correction=qrcode.constants.ERROR_CORRECT_H,
+                box_size=10,
+                border=4,
             )
-            qr = qrcode.make(qr_content)
+            qr.add_data(qr_content)
+            qr.make(fit=True)
+
+            img = qr.make_image(fill_color='black', back_color='white')
             buffer = BytesIO()
-            qr.save(buffer, format="PNG")
+            img.save(buffer, format="PNG")
             file_name = f"supplier_{self.supplier.id}_qr.png"
             self.qr_code_image.save(file_name, File(buffer), save=False)
 
     def save(self, *args, **kwargs):
-        if not self.qr_code_image:
-            self.generate_qr_code()
+        if not self.qr_code_image or not os.path.isfile(self.qr_code_image.path):
+            self.generate_qr_code(force_recreate=True)
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -74,21 +78,28 @@ class ProductQR(models.Model):
     )
     created_at = models.DateTimeField(_("Created At"), auto_now_add=True)
 
-    def generate_qr_code(self):
+    def generate_qr_code(self, force_recreate=False):
         """Generates a QR code for the product's encrypted or tokenized URL if the supplier is approved."""
-        if self.supplier.approval_status == ApprovalStatus.APPROVED:
-            qr_content = (
-                f"/product/{self.qr_token}/"  # Use a tokenized URL for security
+        if self.supplier.approval_status == ApprovalStatus.APPROVED and (force_recreate or not self.qr_code_image):
+            qr_content = f"/product/{self.qr_token}/"  # Use a tokenized URL for security
+            qr = qrcode.QRCode(
+                version=1,
+                error_correction=qrcode.constants.ERROR_CORRECT_H,
+                box_size=10,
+                border=4,
             )
-            qr = qrcode.make(qr_content)
+            qr.add_data(qr_content)
+            qr.make(fit=True)
+
+            img = qr.make_image(fill_color='black', back_color='white')
             buffer = BytesIO()
-            qr.save(buffer, format="PNG")
+            img.save(buffer, format="PNG")
             file_name = f"product_{self.product_id}_qr.png"
             self.qr_code_image.save(file_name, File(buffer), save=False)
 
     def save(self, *args, **kwargs):
-        if not self.qr_code_image:
-            self.generate_qr_code()
+        if not self.qr_code_image or not os.path.isfile(self.qr_code_image.path):
+            self.generate_qr_code(force_recreate=True)
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -116,21 +127,28 @@ class CertificateQR(models.Model):
     )
     created_at = models.DateTimeField(_("Created At"), auto_now_add=True)
 
-    def generate_qr_code(self):
+    def generate_qr_code(self, force_recreate=False):
         """Generates a QR code for the certificate's encrypted or tokenized URL if the supplier and certificate are approved."""
-        if self.supplier.approval_status == ApprovalStatus.APPROVED:
-            qr_content = (
-                f"/certificate/{self.qr_token}/"  # Use a tokenized URL for security
+        if self.supplier.approval_status == ApprovalStatus.APPROVED and (force_recreate or not self.qr_code_image):
+            qr_content = f"/certificate/{self.qr_token}/"  # Use a tokenized URL for security
+            qr = qrcode.QRCode(
+                version=1,
+                error_correction=qrcode.constants.ERROR_CORRECT_H,
+                box_size=10,
+                border=4,
             )
-            qr = qrcode.make(qr_content)
+            qr.add_data(qr_content)
+            qr.make(fit=True)
+
+            img = qr.make_image(fill_color='black', back_color='white')
             buffer = BytesIO()
-            qr.save(buffer, format="PNG")
+            img.save(buffer, format="PNG")
             file_name = f"certificate_{self.certificate_id}_qr.png"
             self.qr_code_image.save(file_name, File(buffer), save=False)
 
     def save(self, *args, **kwargs):
-        if not self.qr_code_image:
-            self.generate_qr_code()
+        if not self.qr_code_image or not os.path.isfile(self.qr_code_image.path):
+            self.generate_qr_code(force_recreate=True)
         super().save(*args, **kwargs)
 
     def __str__(self):
