@@ -1,2 +1,14 @@
-# Ignore .env files
+# Python files
+*.pyc
+__pycache__/
+
+# Virtual Environment
+venv/
+env/
+
+# Django stuff
+db.sqlite3
+/staticfiles/
+
+# Environment variables
 .env

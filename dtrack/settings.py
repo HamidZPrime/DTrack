@@ -23,7 +23,7 @@ SECRET_KEY = env("SECRET_KEY")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["dtrack.zprime.ai"])
 
 # Site URL
-SITE_URL = env("SITE_URL", default="https://dtrack.zprime.ai")  # Ensure this is set in .env
+SSITE_URL = os.getenv('SITE_URL', 'http://localhost:8000')
 
 # Application definition
 INSTALLED_APPS = [
