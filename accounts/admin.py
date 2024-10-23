@@ -7,10 +7,14 @@ from django.contrib.auth.models import Group, Permission
 from .models import CustomUser, OperatorPermission, UserActivityLog, EmailVerificationToken
 from profiles.models import Profile
 
+<<<<<<< HEAD
 # Unregister the default Group admin to customize it later (if needed)
 admin.site.unregister(Group)
 
 
+=======
+# Inline Profile Admin within the CustomUserAdmin
+>>>>>>> heroku/main
 class ProfileInline(admin.StackedInline):
     """
     Inline admin descriptor for Profile model.
@@ -91,6 +95,7 @@ class CustomUserAdmin(BaseUserAdmin):
     )
 
     def save_model(self, request, obj, form, change):
+<<<<<<< HEAD
         super().save_model(request, obj, form, change)
         action = "updated" if change else "created"
         UserActivityLog.objects.create(
@@ -102,6 +107,26 @@ class CustomUserAdmin(BaseUserAdmin):
 
     def delete_model(self, request, obj):
         UserActivityLog.objects.create(
+=======
+        is_new = not obj.pk
+        super().save_model(request, obj, form, change)
+
+        # Create a profile for new users after they are saved
+        if is_new and obj.role == 'supplier':
+            Profile.objects.create(user=obj)
+
+        action = f"User {obj.email} {'updated' if change else 'created'} by {request.user.email}"
+        log_activity(
+            user=request.user,
+            action=action,
+            additional_data={'user': obj.email},
+            ip_address=request.META.get('REMOTE_ADDR')
+        )
+
+    def delete_model(self, request, obj):
+        action = f"User {obj.email} deleted by {request.user.email}"
+        log_activity(
+>>>>>>> heroku/main
             user=request.user,
             action=f"User {obj.email} deleted by admin {request.user.email}",
             ip_address=self._get_client_ip(request),
@@ -109,6 +134,7 @@ class CustomUserAdmin(BaseUserAdmin):
         )
         super().delete_model(request, obj)
 
+<<<<<<< HEAD
     @staticmethod
     def _get_client_ip(request):
         """
@@ -204,3 +230,7 @@ class PermissionAdmin(admin.ModelAdmin):
     list_display = ("name", "content_type", "codename")
     search_fields = ("name", "codename")
     list_filter = ("content_type",)
+=======
+
+admin.site.register(CustomUser, CustomUserAdmin)
+>>>>>>> heroku/main
