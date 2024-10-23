@@ -139,7 +139,7 @@ from django.dispatch import receiver
 
 
 @receiver(post_save, sender=CustomUser)
-def handle_user_post_save(_sender, instance, _created, **_kwargs):
+def handle_user_post_save(sender, instance, created, **kwargs):
     if instance.is_superuser and not instance.is_active:
         instance.is_active = True
         instance.save(update_fields=['is_active'])
