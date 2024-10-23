@@ -7,19 +7,6 @@
     <list default="true" id="76796761-ae8d-4476-ae4d-54be74a15b91" name="Changes" comment="Initial Project DTrack Z Prime">
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/signals.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/signals.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/certificates/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/certificates/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dtrack/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dtrack/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/file_management/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/file_management/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/file_management/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/file_management/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventory/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/inventory/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification_templates/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/notification_templates/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notifications/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/notifications/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qr_generator/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/qr_generator/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/support/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/support/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task_scheduler/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/task_scheduler/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/twilio_app/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/twilio_app/admin.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +126,7 @@
       <workItem from="1729633786024" duration="58000" />
       <workItem from="1729633849788" duration="161000" />
       <workItem from="1729634250850" duration="6400000" />
-      <workItem from="1729674763184" duration="2958000" />
+      <workItem from="1729674763184" duration="3350000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Project DTrack">
       <option name="closed" value="true" />
