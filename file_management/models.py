@@ -3,10 +3,12 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 import uuid
 
+
 class FileCategory(models.Model):
     """
     Model to categorize files based on their purpose.
     """
+
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
 
@@ -18,15 +20,18 @@ class FileRecord(models.Model):
     """
     Comprehensive model to handle files uploaded by users, with categories, logs, and access controls.
     """
-    file = models.FileField(upload_to='uploads/')
+
+    file = models.FileField(upload_to="uploads/")
     description = models.TextField(blank=True)
-    category = models.ForeignKey(FileCategory, on_delete=models.SET_NULL, null=True, related_name='files')
+    category = models.ForeignKey(
+        FileCategory, on_delete=models.SET_NULL, null=True, related_name="files"
+    )
     uploaded_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        related_name='uploaded_files'
+        related_name="uploaded_files",
     )
     timestamp = models.DateTimeField(auto_now_add=True)
     last_accessed = models.DateTimeField(null=True, blank=True)
@@ -40,12 +45,12 @@ class FileLog(models.Model):
     """
     Model to track file-related activities such as upload, update, or deletion.
     """
-    file_record = models.ForeignKey(FileRecord, on_delete=models.CASCADE, related_name='logs')
+
+    file_record = models.ForeignKey(
+        FileRecord, on_delete=models.CASCADE, related_name="logs"
+    )
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True
     )
     action = models.CharField(max_length=100)
     timestamp = models.DateTimeField(auto_now_add=True)

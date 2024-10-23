@@ -5,42 +5,67 @@ from django.utils.translation import gettext_lazy as _
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'get_full_name', 'profile_complete', 'date_of_birth', 'city', 'country', 'phone_verified')
+    list_display = (
+        "user",
+        "get_full_name",
+        "profile_complete",
+        "date_of_birth",
+        "city",
+        "country",
+        "phone_verified",
+    )
     list_filter = (
-    'profile_complete', 'phone_verified', 'country', 'user__role', 'user__is_active', 'user__date_joined')
-    search_fields = ('user__email', 'user__first_name', 'user__last_name', 'company_name', 'city', 'industry')
-    readonly_fields = ('date_created', 'date_updated')
-    autocomplete_fields = ['user']
+        "profile_complete",
+        "phone_verified",
+        "country",
+        "user__role",
+        "user__is_active",
+        "user__date_joined",
+    )
+    search_fields = (
+        "user__email",
+        "user__first_name",
+        "user__last_name",
+        "company_name",
+        "city",
+        "industry",
+    )
+    readonly_fields = ("date_created", "date_updated")
+    autocomplete_fields = ["user"]
 
     fieldsets = (
-        (None, {
-            'fields': ('user', 'profile_picture')
-        }),
-        ('Personal Information', {
-            'fields': ('date_of_birth', 'address', 'city', 'country', 'postal_code')
-        }),
-        ('Verification', {
-            'fields': ('phone_verified',)
-        }),
-        ('Supplier Information', {
-            'fields': ('company_name', 'company_registration_number', 'vat_number', 'supplier_type', 'industry'),
-            'classes': ('collapse',)
-        }),
-        ('Admin Notes', {
-            'fields': ('admin_notes',),
-            'classes': ('collapse',)
-        }),
-        ('Operator Information', {
-            'fields': ('operator_level',),
-            'classes': ('collapse',)
-        }),
-        ('End User Preferences', {
-            'fields': ('preferred_language', 'interests'),
-            'classes': ('collapse',)
-        }),
-        ('Additional Information', {
-            'fields': ('profile_complete', 'date_created', 'date_updated')
-        }),
+        (None, {"fields": ("user", "profile_picture")}),
+        (
+            "Personal Information",
+            {"fields": ("date_of_birth", "address", "city", "country", "postal_code")},
+        ),
+        ("Verification", {"fields": ("phone_verified",)}),
+        (
+            "Supplier Information",
+            {
+                "fields": (
+                    "company_name",
+                    "company_registration_number",
+                    "vat_number",
+                    "supplier_type",
+                    "industry",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
+        ("Admin Notes", {"fields": ("admin_notes",), "classes": ("collapse",)}),
+        (
+            "Operator Information",
+            {"fields": ("operator_level",), "classes": ("collapse",)},
+        ),
+        (
+            "End User Preferences",
+            {"fields": ("preferred_language", "interests"), "classes": ("collapse",)},
+        ),
+        (
+            "Additional Information",
+            {"fields": ("profile_complete", "date_created", "date_updated")},
+        ),
     )
 
     def get_queryset(self, request):
@@ -48,11 +73,18 @@ class ProfileAdmin(admin.ModelAdmin):
         Customizes the queryset to optimize performance, filter data appropriately, and prefetch related fields.
         """
         # Fetch related fields to reduce database hits (pre-fetching related user information)
-        queryset = super().get_queryset(request).select_related('user').prefetch_related('user__groups')
+        queryset = (
+            super()
+            .get_queryset(request)
+            .select_related("user")
+            .prefetch_related("user__groups")
+        )
 
         # Example additional filtering: Only show active users or profiles based on some condition
         if not request.user.is_superuser:
-            queryset = queryset.filter(user__is_active=True)  # Example: Non-superusers only see active users' profiles
+            queryset = queryset.filter(
+                user__is_active=True
+            )  # Example: Non-superusers only see active users' profiles
 
         return queryset
 

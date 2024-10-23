@@ -16,11 +16,18 @@ class Certificate(models.Model):
     Model to store and manage uploaded certificates securely with tamper detection and versioning.
     Each certificate is linked to a supplier and a unique QR code for verification.
     """
-    supplier = models.ForeignKey(CustomUser, on_delete=models.CASCADE, limit_choices_to={'role': 'supplier'},
-                                 verbose_name=_("Supplier"))
+
+    supplier = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        limit_choices_to={"role": "supplier"},
+        verbose_name=_("Supplier"),
+    )
     name = models.CharField(_("Certificate Name"), max_length=255)
-    file = models.FileField(_("Certificate File"), upload_to='certificates/')
-    file_hash = models.CharField(_("File Hash"), max_length=64, editable=False, blank=True)
+    file = models.FileField(_("Certificate File"), upload_to="certificates/")
+    file_hash = models.CharField(
+        _("File Hash"), max_length=64, editable=False, blank=True
+    )
     description = models.TextField(_("Description"), blank=True)
     upload_time = models.DateTimeField(_("Upload Time"), auto_now_add=True)
     last_checked = models.DateTimeField(_("Last Checked"), null=True, blank=True)
@@ -30,19 +37,29 @@ class Certificate(models.Model):
     version = models.PositiveIntegerField(_("Version"), default=1)
     previous_versions = models.JSONField(_("Previous Versions"), null=True, blank=True)
     approved = models.BooleanField(_("Approved"), default=False)
-    approval_status = models.CharField(_("Approval Status"), max_length=10, choices=ApprovalStatus.choices,
-                                       default=ApprovalStatus.PENDING)
+    approval_status = models.CharField(
+        _("Approval Status"),
+        max_length=10,
+        choices=ApprovalStatus.choices,
+        default=ApprovalStatus.PENDING,
+    )
     suspected_tampered = models.BooleanField(_("Suspected Tampered"), default=False)
 
-    certificate_qr = models.OneToOneField(CertificateQR, on_delete=models.SET_NULL, null=True, blank=True,
-                                          related_name="certificate", verbose_name=_("Certificate QR Code"))
+    certificate_qr = models.OneToOneField(
+        CertificateQR,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="certificate",
+        verbose_name=_("Certificate QR Code"),
+    )
 
     class Meta:
         verbose_name = _("Certificate")
         verbose_name_plural = _("Certificates")
         indexes = [
-            models.Index(fields=['supplier']),
-            models.Index(fields=['file_hash']),
+            models.Index(fields=["supplier"]),
+            models.Index(fields=["file_hash"]),
         ]
 
     def __str__(self):
@@ -53,8 +70,8 @@ class Certificate(models.Model):
         Generate a SHA-256 hash for the uploaded file.
         """
         hash_sha256 = hashlib.sha256()
-        if self.file and hasattr(self.file, 'open'):
-            with self.file.open('rb') as f:
+        if self.file and hasattr(self.file, "open"):
+            with self.file.open("rb") as f:
                 for chunk in iter(lambda: f.read(4096), b""):
                     hash_sha256.update(chunk)
             return hash_sha256.hexdigest()
@@ -65,11 +82,11 @@ class Certificate(models.Model):
         Extract text from the uploaded file using appropriate methods based on file type.
         """
         if self.file:
-            file_extension = self.file.name.split('.')[-1].lower()
+            file_extension = self.file.name.split(".")[-1].lower()
 
-            if file_extension == 'pdf':
+            if file_extension == "pdf":
                 return self.extract_text_from_pdf()
-            elif file_extension in ['jpg', 'jpeg', 'png']:
+            elif file_extension in ["jpg", "jpeg", "png"]:
                 return self.extract_text_from_image()
 
         return ""
@@ -80,7 +97,7 @@ class Certificate(models.Model):
         """
         text = ""
         try:
-            with self.file.open('rb') as pdf_file:
+            with self.file.open("rb") as pdf_file:
                 reader = PyPDF2.PdfReader(pdf_file)
                 for page in reader.pages:
                     text += page.extract_text() or ""
@@ -94,7 +111,7 @@ class Certificate(models.Model):
         """
         text = ""
         try:
-            with self.file.open('rb') as image_file:
+            with self.file.open("rb") as image_file:
                 image = Image.open(image_file)
                 text = pytesseract.image_to_string(image)
         except Exception as e:
@@ -116,7 +133,10 @@ class Certificate(models.Model):
         extracted_dates = re.findall(date_pattern, extracted_text)
 
         # Convert string dates to date objects for comparison
-        extracted_dates = [timezone.datetime.strptime(date_str, "%Y-%m-%d").date() for date_str in extracted_dates]
+        extracted_dates = [
+            timezone.datetime.strptime(date_str, "%Y-%m-%d").date()
+            for date_str in extracted_dates
+        ]
 
         # Validate manually entered issue and expiry dates
         if self.issue_date in extracted_dates and self.expiry_date in extracted_dates:
@@ -130,7 +150,11 @@ class Certificate(models.Model):
         """
         # Validate the manually entered dates against extracted dates
         if not self.validate_dates():
-            raise ValueError(_("The manually entered dates do not match the dates found in the uploaded certificate file."))
+            raise ValueError(
+                _(
+                    "The manually entered dates do not match the dates found in the uploaded certificate file."
+                )
+            )
 
         current_hash = self.calculate_file_hash()
 
@@ -141,11 +165,13 @@ class Certificate(models.Model):
                 # Archive the previous version
                 if not self.previous_versions:
                     self.previous_versions = []
-                self.previous_versions.append({
-                    "version": existing_certificate.version,
-                    "file_hash": existing_certificate.file_hash,
-                    "upload_time": str(existing_certificate.upload_time),
-                })
+                self.previous_versions.append(
+                    {
+                        "version": existing_certificate.version,
+                        "file_hash": existing_certificate.file_hash,
+                        "upload_time": str(existing_certificate.upload_time),
+                    }
+                )
                 self.version += 1
 
         self.file_hash = current_hash
@@ -170,7 +196,9 @@ class Certificate(models.Model):
             self.suspected_tampered = False
         else:
             self.verified = False
-            self.suspected_tampered = True  # Mark as suspected tampered if verification fails
+            self.suspected_tampered = (
+                True  # Mark as suspected tampered if verification fails
+            )
         self.last_checked = timezone.now()
         self.save()
 
@@ -187,4 +215,6 @@ class Certificate(models.Model):
         self.verify_integrity()
         if self.suspected_tampered:
             # Log or notify an admin or auditor in case of tampering detection
-            print(f"Suspected tampering detected for certificate: {self.name} by {self.supplier.get_full_name()}")
+            print(
+                f"Suspected tampering detected for certificate: {self.name} by {self.supplier.get_full_name()}"
+            )

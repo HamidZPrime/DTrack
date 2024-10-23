@@ -1,0 +1,16 @@
+<!-- templates/base.html -->
+
+<!DOCTYPE html>
+<html lang="{% get_current_language %}">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}DTrack{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <!-- Include other meta tags and stylesheets -->
+</head>
+<body>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

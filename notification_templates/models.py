@@ -4,13 +4,15 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 
 # Custom storage for voice messages
-voice_storage = FileSystemStorage(location='media/voice_messages/')
+voice_storage = FileSystemStorage(location="media/voice_messages/")
+
 
 class TemplateCategory(models.Model):
     """
     Model to categorize templates based on their purpose.
     E.g., Notification, Welcome Email, Reminder, etc.
     """
+
     name = models.CharField(_("Category Name"), max_length=100, unique=True)
     description = models.TextField(_("Description"), blank=True)
 
@@ -26,12 +28,28 @@ class EmailTemplate(models.Model):
     """
     Model to define HTML email templates.
     """
+
     name = models.CharField(_("Template Name"), max_length=255, unique=True)
     subject = models.CharField(_("Email Subject"), max_length=255)
-    html_body = models.TextField(_("HTML Body"), help_text=_("HTML format email content"))
-    text_body = models.TextField(_("Text Body"), blank=True, help_text=_("Optional plain text version"))
-    category = models.ForeignKey(TemplateCategory, on_delete=models.SET_NULL, null=True, related_name='email_templates', verbose_name=_("Category"))
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, verbose_name=_("Created By"))
+    html_body = models.TextField(
+        _("HTML Body"), help_text=_("HTML format email content")
+    )
+    text_body = models.TextField(
+        _("Text Body"), blank=True, help_text=_("Optional plain text version")
+    )
+    category = models.ForeignKey(
+        TemplateCategory,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="email_templates",
+        verbose_name=_("Category"),
+    )
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name=_("Created By"),
+    )
 
     class Meta:
         verbose_name = _("Email Template")
@@ -45,10 +63,24 @@ class SMSTemplate(models.Model):
     """
     Model to define SMS templates.
     """
+
     name = models.CharField(_("Template Name"), max_length=255, unique=True)
-    body = models.CharField(_("SMS Body"), max_length=160, help_text=_("160 characters max for SMS"))
-    category = models.ForeignKey(TemplateCategory, on_delete=models.SET_NULL, null=True, related_name='sms_templates', verbose_name=_("Category"))
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, verbose_name=_("Created By"))
+    body = models.CharField(
+        _("SMS Body"), max_length=160, help_text=_("160 characters max for SMS")
+    )
+    category = models.ForeignKey(
+        TemplateCategory,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="sms_templates",
+        verbose_name=_("Category"),
+    )
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name=_("Created By"),
+    )
 
     class Meta:
         verbose_name = _("SMS Template")
@@ -62,11 +94,25 @@ class VoiceTemplate(models.Model):
     """
     Model to define recorded voice message templates.
     """
+
     name = models.CharField(_("Message Name"), max_length=255, unique=True)
-    message_file = models.FileField(_("Recorded Voice Message"), storage=voice_storage, upload_to='voice_messages/')
+    message_file = models.FileField(
+        _("Recorded Voice Message"), storage=voice_storage, upload_to="voice_messages/"
+    )
     description = models.TextField(_("Description"), blank=True)
-    category = models.ForeignKey(TemplateCategory, on_delete=models.SET_NULL, null=True, related_name='voice_templates', verbose_name=_("Category"))
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, verbose_name=_("Created By"))
+    category = models.ForeignKey(
+        TemplateCategory,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="voice_templates",
+        verbose_name=_("Category"),
+    )
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name=_("Created By"),
+    )
 
     class Meta:
         verbose_name = _("Voice Template")
@@ -80,6 +126,7 @@ class TemplateTag(models.Model):
     """
     Model to tag templates for easier categorization and filtering.
     """
+
     name = models.CharField(_("Tag Name"), max_length=50, unique=True)
     description = models.TextField(_("Description"), blank=True)
 
@@ -95,10 +142,20 @@ class TemplateUsage(models.Model):
     """
     Model to log the usage of each template in notifications or other areas.
     """
+
     template_name = models.CharField(_("Template Name"), max_length=255)
-    used_in = models.CharField(_("Used In"), max_length=255, help_text=_("E.g., Certificate Expiry Notification"))
+    used_in = models.CharField(
+        _("Used In"),
+        max_length=255,
+        help_text=_("E.g., Certificate Expiry Notification"),
+    )
     used_at = models.DateTimeField(_("Used At"), auto_now_add=True)
-    used_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, verbose_name=_("Used By"))
+    used_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name=_("Used By"),
+    )
 
     class Meta:
         verbose_name = _("Template Usage")
