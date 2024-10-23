@@ -1,3 +1,5 @@
+# accounts/admins.py
+
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
@@ -38,6 +40,14 @@ class CustomUserAdmin(BaseUserAdmin):
         "last_login",
     )
     list_filter = ("role", "is_active", "email_verified", "is_approved", "date_joined")
+    search_fields = ("email", "first_name", "last_name", "phone_number")
+    ordering = ("email",)
+    filter_horizontal = ("groups", "user_permissions")
+
+    # Make 'last_login' and 'date_joined' read-only fields
+    readonly_fields = ("date_joined", "last_login")
+
+    # Define the fields to be displayed in the admin form
     fieldsets = (
         (None, {"fields": ("email", "password")}),
         (_("Personal Info"), {"fields": ("first_name", "last_name", "phone_number", "language")}),
@@ -53,9 +63,11 @@ class CustomUserAdmin(BaseUserAdmin):
                 "user_permissions",
             ),
         }),
-        (_("Important Dates"), {"fields": ("last_login", "date_joined")}),
+        (_("Important Dates"), {"fields": ("date_joined", "last_login")}),
         (_("Verification"), {"fields": ("email_verified",)}),
     )
+
+    # Fields to display when creating a new user via the admin
     add_fieldsets = (
         (None, {
             "classes": ("wide",),
@@ -77,10 +89,6 @@ class CustomUserAdmin(BaseUserAdmin):
             ),
         }),
     )
-    search_fields = ("email", "first_name", "last_name", "phone_number")
-    ordering = ("email",)
-    filter_horizontal = ("groups", "user_permissions")
-    readonly_fields = ("date_joined", "last_login")
 
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
