@@ -82,3 +82,4 @@ class CertificateQRAdmin(admin.ModelAdmin):
         """
         obj.generate_qr_code()
         super().save_model(request, obj, form, change)
+
