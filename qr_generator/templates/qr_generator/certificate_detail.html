@@ -1,12 +1,24 @@
 {% extends 'dashboard/base.html' %}
-{% load i18n %}
+
 {% block content %}
 <div class="container">
     <h2>Certificate Details</h2>
     <div class="card">
         <div class="card-body">
             <h3>Certificate ID: {{ certificate.certificate_id }}</h3>
-            <p>Supplier: {{ certificate.supplier.get_full_name }}</p>
+            <p>Supplier: {{ supplier.get_full_name }}</p>
+            <p>Phone: {{ supplier.phone_number }}</p>
+            <p>Date of Birth: {{ profile.date_of_birth }}</p>
+            <p>Phone Verified: {{ profile.phone_verified|yesno:"Yes,No" }}</p>
+            <p>Address: {{ profile.address }}</p>
+            <p>City: {{ profile.city }}</p>
+            <p>Country: {{ profile.country }}</p>
+            <p>Postal Code: {{ profile.postal_code }}</p>
+            <p>Company: {{ profile.company_name }}</p>
+            <p>Company Registration Number: {{ profile.company_registration_number }}</p>
+            <p>VAT Number: {{ profile.vat_number }}</p>
+            <p>Supplier Type: {{ profile.supplier_type }}</p>
+            <p>Industry: {{ profile.industry }}</p>
             <p>Issued Date: {{ certificate.created_at|date:"F j, Y, g:i a" }}</p>
         </div>
     </div>
