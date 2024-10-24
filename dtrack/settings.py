@@ -3,10 +3,23 @@ from pathlib import Path
 import environ
 from datetime import timedelta
 from django.utils.translation import gettext_lazy as _
+
 # Initialize environment variables
 env = environ.Env(
     DEBUG=(bool, False)
 )
+
+# Base Directory
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
+
+# Security Settings
+DEBUG = env.bool("DEBUG", default=True)
+SECRET_KEY = env("SECRET_KEY")
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["dtrack.zprime.ai"])
+SITE_URL = env("SITE_URL")
 
 # Language Settings
 LANGUAGE_CODE = 'en'
@@ -14,22 +27,15 @@ LANGUAGES = [
     ('en', _('English')),
     ('ar', _('Arabic')),
 ]
+LOCALE_PATHS = [BASE_DIR / 'locale']
 
+# Authentication
 AUTH_USER_MODEL = 'accounts.CustomUser'
-BASE_DIR = Path(__file__).resolve().parent.parent
-environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
-
 LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/swagger/'  # Redirect after login
-LOGOUT_REDIRECT_URL = '/swagger/'  # Redirect after logout
+LOGIN_REDIRECT_URL = '/api-auth/'
+LOGOUT_REDIRECT_URL = '/api-auth/'
 
-
-DEBUG = env.bool("DEBUG", default=True)
-SECRET_KEY = env("SECRET_KEY")
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["dtrack.zprime.ai"])
-SITE_URL = env("SITE_URL")
-
-# Application definition
+# Application Definition
 INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -71,24 +77,18 @@ INSTALLED_APPS = [
     "notification_templates",
     "twilio_app",
     "storages",  # Required for S3
-    "drf_yasg",  # Make sure drf-yasg is included here
 ]
 
 MIDDLEWARE = [
-    'django.middleware.locale.LocaleMiddleware',
     "django.middleware.security.SecurityMiddleware",
+    'django.middleware.locale.LocaleMiddleware',
     "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-]
-
-LOCALE_PATHS = [
-    BASE_DIR / 'locale',
 ]
 
 ROOT_URLCONF = "dtrack.urls"
@@ -111,7 +111,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "dtrack.wsgi.application"
 
-# Database configuration (using .env variables)
+# Database Configuration (using .env variables)
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -139,13 +139,9 @@ AWS_QUERYSTRING_AUTH = False
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-# Static Files
+# Static and Media Files Configuration
 STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
-
-# Add this line to set the directory where collectstatic will store static files locally before uploading to S3.
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Media Files
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 
 # Email Configuration using Amazon SES
@@ -157,7 +153,7 @@ EMAIL_HOST_USER = env("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="no-reply@zprimedev.com")
 
-# TWILIO VOIP
+# TWILIO Configuration
 TWILIO_ACCOUNT_SID = env("TWILIO_ACCOUNT_SID")
 TWILIO_AUTH_TOKEN = env("TWILIO_AUTH_TOKEN")
 TWILIO_PHONE_NUMBER = env("TWILIO_PHONE_NUMBER")
