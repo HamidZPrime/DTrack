@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "notification_templates",
     "twilio_app",
     "storages",  # Required for S3
+    "drf_yasg",  # Make sure drf-yasg is included here
 ]
 
 MIDDLEWARE = [
@@ -118,15 +119,10 @@ AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 AWS_QUERYSTRING_AUTH = False
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Static Files
 STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-# Required for collectstatic command
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-
-# Media Files
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 
 # Email Configuration using Amazon SES
