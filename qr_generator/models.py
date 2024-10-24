@@ -10,7 +10,6 @@ from django.conf import settings
 import uuid
 import os
 
-
 class SupplierQR(models.Model):
     """
     Model to generate and store QR codes for suppliers.
@@ -34,7 +33,7 @@ class SupplierQR(models.Model):
         """Generates a QR code for the supplier's secure URL if approved."""
         if self.supplier.approval_status == ApprovalStatus.APPROVED and (force_recreate or not self.qr_code_image):
             base_url = settings.SITE_URL
-            qr_content = f"{base_url}{reverse('supplier_detail', args=[self.qr_token])}"
+            qr_content = f"{base_url}{reverse('qr_generator:supplier_detail', args=[self.qr_token])}"
             qr = qrcode.QRCode(
                 version=1,
                 error_correction=qrcode.constants.ERROR_CORRECT_H,
@@ -57,7 +56,6 @@ class SupplierQR(models.Model):
 
     def __str__(self):
         return f"QR Code for {self.supplier.get_full_name()}"
-
 
 class ProductQR(models.Model):
     """
@@ -83,7 +81,7 @@ class ProductQR(models.Model):
         """Generates a QR code for the product's secure URL if the supplier is approved."""
         if self.supplier.approval_status == ApprovalStatus.APPROVED and (force_recreate or not self.qr_code_image):
             base_url = settings.SITE_URL
-            qr_content = f"{base_url}{reverse('product_detail', args=[self.qr_token])}"
+            qr_content = f"{base_url}{reverse('qr_generator:product_detail', args=[self.qr_token])}"
             qr = qrcode.QRCode(
                 version=1,
                 error_correction=qrcode.constants.ERROR_CORRECT_H,
@@ -106,7 +104,6 @@ class ProductQR(models.Model):
 
     def __str__(self):
         return f"QR Code for Product {self.product_id}"
-
 
 class CertificateQR(models.Model):
     """
@@ -132,7 +129,7 @@ class CertificateQR(models.Model):
         """Generates a QR code for the certificate's secure URL if the supplier is approved."""
         if self.supplier.approval_status == ApprovalStatus.APPROVED and (force_recreate or not self.qr_code_image):
             base_url = settings.SITE_URL
-            qr_content = f"{base_url}{reverse('certificate_detail', args=[self.qr_token])}"
+            qr_content = f"{base_url}{reverse('qr_generator:certificate_detail', args=[self.qr_token])}"
             qr = qrcode.QRCode(
                 version=1,
                 error_correction=qrcode.constants.ERROR_CORRECT_H,
