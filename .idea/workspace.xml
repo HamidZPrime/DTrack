@@ -5,9 +5,84 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="76796761-ae8d-4476-ae4d-54be74a15b91" name="Changes" comment="Account Enhancement DTrack Z Prime">
-      <change beforePath="$PROJECT_DIR$/dtrack/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dtrack/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dtrack/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/dtrack/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytics/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytics/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytics/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/approval/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/approval/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/approval/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/audit_logs/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/audit_logs/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/audit_logs/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/certificates/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/certificates/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/certificates/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compliance/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compliance/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compliance/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/custom_auth/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/custom_auth/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/custom_auth/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashboard/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashboard/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashboard/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashboard/templates/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dtrack/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/file_management/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/file_management/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/file_management/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/food_safety/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/food_safety/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/food_safety/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventory/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventory/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventory/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification_templates/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification_templates/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification_templates/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payments/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payments/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payments/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profiles/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profiles/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profiles/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qr_generator/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qr_generator/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qr_generator/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reports/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reports/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reports/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/supplier_management/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/supplier_management/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/supplier_management/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/support/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/support/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/support/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/system_settings/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/system_settings/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/system_settings/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task_scheduler/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task_scheduler/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task_scheduler/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/twilio_app/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/twilio_app/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/twilio_app/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user_management/api/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user_management/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user_management/api/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/forms.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/serializers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qr_generator/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/qr_generator/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/qr_generator/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +91,13 @@
   </component>
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -46,23 +128,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Hamid/Development/Python/Django/dtrack&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/hamidheyhat/Development/Python/Django/dtrack",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/dtrack" />
+      <recent name="$PROJECT_DIR$/dashboard" />
+      <recent name="$PROJECT_DIR$/locale" />
+      <recent name="$PROJECT_DIR$/accounts" />
+      <recent name="$PROJECT_DIR$/approval" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/dashboard/templates/dashboard" />
+      <recent name="$PROJECT_DIR$/dashboard/templates" />
+      <recent name="$PROJECT_DIR$/dashboard" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="dtrack" type="Python.DjangoServer" factoryName="Django server">
       <module name="dtrack" />
@@ -142,7 +238,7 @@
       <workItem from="1729757494806" duration="9061000" />
       <workItem from="1729781187652" duration="1528000" />
       <workItem from="1729788860273" duration="9300000" />
-      <workItem from="1729799703856" duration="3678000" />
+      <workItem from="1729799703856" duration="5309000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Project DTrack">
       <option name="closed" value="true" />
