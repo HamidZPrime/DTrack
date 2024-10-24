@@ -1,0 +1,16 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Supplier Details</h2>
+    <div class="card">
+        <div class="card-body">
+            <h3>{{ supplier.get_full_name }}</h3>
+            <p>Email: {{ supplier.email }}</p>
+            <p>Phone: {{ supplier.phone_number }}</p>
+            <p>Address: {{ supplier.address }}</p>
+            <p>Company: {{ supplier.company_name }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,10 +1,12 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from accounts.models import CustomUser
-from approval.models import ApprovalStatus  # Import approval status choices
+from approval.models import ApprovalStatus
 import qrcode
 from io import BytesIO
 from django.core.files import File
+from django.urls import reverse
+from django.conf import settings
 import uuid
 import os
 
@@ -12,9 +14,8 @@ import os
 class SupplierQR(models.Model):
     """
     Model to generate and store QR codes for suppliers.
-    Each supplier is associated with a unique QR code, and the code points to an encrypted or tokenized URL.
+    Each supplier is associated with a unique QR code, and the code points to a secure URL.
     """
-
     supplier = models.OneToOneField(
         CustomUser,
         on_delete=models.CASCADE,
@@ -30,9 +31,10 @@ class SupplierQR(models.Model):
     created_at = models.DateTimeField(_("Created At"), auto_now_add=True)
 
     def generate_qr_code(self, force_recreate=False):
-        """Generates a QR code for the supplier's encrypted or tokenized URL if approved."""
+        """Generates a QR code for the supplier's secure URL if approved."""
         if self.supplier.approval_status == ApprovalStatus.APPROVED and (force_recreate or not self.qr_code_image):
-            qr_content = f"/supplier/{self.qr_token}/"  # Use a tokenized URL for security
+            base_url = settings.SITE_URL
+            qr_content = f"{base_url}{reverse('supplier_detail', args=[self.qr_token])}"
             qr = qrcode.QRCode(
                 version=1,
                 error_correction=qrcode.constants.ERROR_CORRECT_H,
@@ -60,9 +62,8 @@ class SupplierQR(models.Model):
 class ProductQR(models.Model):
     """
     Model to generate and store QR codes for each product.
-    Each product added by a supplier is associated with its unique QR code, pointing to an encrypted or tokenized URL.
+    Each product added by a supplier is associated with its unique QR code, pointing to a secure URL.
     """
-
     supplier = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
@@ -79,9 +80,10 @@ class ProductQR(models.Model):
     created_at = models.DateTimeField(_("Created At"), auto_now_add=True)
 
     def generate_qr_code(self, force_recreate=False):
-        """Generates a QR code for the product's encrypted or tokenized URL if the supplier is approved."""
+        """Generates a QR code for the product's secure URL if the supplier is approved."""
         if self.supplier.approval_status == ApprovalStatus.APPROVED and (force_recreate or not self.qr_code_image):
-            qr_content = f"/product/{self.qr_token}/"  # Use a tokenized URL for security
+            base_url = settings.SITE_URL
+            qr_content = f"{base_url}{reverse('product_detail', args=[self.qr_token])}"
             qr = qrcode.QRCode(
                 version=1,
                 error_correction=qrcode.constants.ERROR_CORRECT_H,
@@ -109,9 +111,8 @@ class ProductQR(models.Model):
 class CertificateQR(models.Model):
     """
     Model to generate and store QR codes for each certificate.
-    Each certificate is associated with its unique QR code for validation, pointing to an encrypted or tokenized URL.
+    Each certificate is associated with its unique QR code for validation, pointing to a secure URL.
     """
-
     supplier = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
@@ -128,9 +129,10 @@ class CertificateQR(models.Model):
     created_at = models.DateTimeField(_("Created At"), auto_now_add=True)
 
     def generate_qr_code(self, force_recreate=False):
-        """Generates a QR code for the certificate's encrypted or tokenized URL if the supplier and certificate are approved."""
+        """Generates a QR code for the certificate's secure URL if the supplier is approved."""
         if self.supplier.approval_status == ApprovalStatus.APPROVED and (force_recreate or not self.qr_code_image):
-            qr_content = f"/certificate/{self.qr_token}/"  # Use a tokenized URL for security
+            base_url = settings.SITE_URL
+            qr_content = f"{base_url}{reverse('certificate_detail', args=[self.qr_token])}"
             qr = qrcode.QRCode(
                 version=1,
                 error_correction=qrcode.constants.ERROR_CORRECT_H,

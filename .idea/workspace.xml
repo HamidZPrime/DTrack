@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="76796761-ae8d-4476-ae4d-54be74a15b91" name="Changes" comment="Account Enhancement DTrack Z Prime">
+      <change afterPath="$PROJECT_DIR$/qr_generator/templates/qr_generator/certificate_detail.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qr_generator/templates/qr_generator/product_detail.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qr_generator/templates/qr_generator/supplier_detail.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qr_generator/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dtrack/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/dtrack/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qr_generator/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/qr_generator/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qr_generator/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/qr_generator/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,6 +141,7 @@
       <workItem from="1729710450606" duration="102000" />
       <workItem from="1729710558212" duration="5364000" />
       <workItem from="1729674763184" duration="4628000" />
+      <workItem from="1729757494806" duration="652000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Project DTrack">
       <option name="closed" value="true" />

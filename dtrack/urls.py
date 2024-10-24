@@ -1,14 +1,12 @@
-# dtrack/urls.py
-
 from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings  # Import settings
-from django.conf.urls.static import static  # Import static
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("accounts/", include("accounts.urls", namespace="accounts")),  # Ensure 'accounts' matches the app_name
-    # Other URL patterns
+    path("accounts/", include("accounts.urls", namespace="accounts")),
+    path("qr/", include("qr_generator.urls", namespace="qr_generator")),  # Include qr_generator URLs
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,14 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Product Details</h2>
+    <div class="card">
+        <div class="card-body">
+            <h3>Product ID: {{ product.product_id }}</h3>
+            <p>Supplier: {{ product.supplier.get_full_name }}</p>
+            <p>Created At: {{ product.created_at|date:"F j, Y, g:i a" }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

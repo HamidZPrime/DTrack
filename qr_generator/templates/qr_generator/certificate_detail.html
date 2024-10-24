@@ -1,0 +1,14 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Certificate Details</h2>
+    <div class="card">
+        <div class="card-body">
+            <h3>Certificate ID: {{ certificate.certificate_id }}</h3>
+            <p>Supplier: {{ certificate.supplier.get_full_name }}</p>
+            <p>Issued Date: {{ certificate.created_at|date:"F j, Y, g:i a" }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
