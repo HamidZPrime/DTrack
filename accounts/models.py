@@ -1,5 +1,3 @@
-# accounts/models.py
-
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
@@ -27,6 +25,8 @@ class CustomUserManager(BaseUserManager):
         if not email:
             raise ValueError(_("The Email field must be set"))
         email = self.normalize_email(email)
+        role = extra_fields.get("role", "enduser")
+        extra_fields["role"] = role
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.is_active = False  # Keep inactive until email verification
@@ -36,6 +36,7 @@ class CustomUserManager(BaseUserManager):
     def create_superuser(self, email: str, password: str = None, **extra_fields) -> "CustomUser":
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("role", "admin")  # Explicitly set role to admin
         user = self.create_user(email, password, **extra_fields)
         user.is_active = True  # Superusers are active by default
         user.save(using=self._db)
@@ -228,40 +229,3 @@ class UserActivityLog(models.Model):
 
     def __str__(self) -> str:
         return f"Activity by {self.user.email} on {self.timestamp}"
-
-
-# Signals for CustomUser
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-
-@receiver(post_save, sender=CustomUser)
-def handle_user_post_save(sender, instance, created, **kwargs):
-    if instance.is_superuser and not instance.is_active:
-        instance.is_active = True
-        instance.save(update_fields=['is_active'])
-
-    if instance.role == "supplier":
-        instance.check_certificate_expiration()
-
-    if instance.role in ["supplier", "operator", "enduser"] and instance.approval_status == "approved":
-        if not instance.is_approved:
-            instance.is_approved = True
-            instance.save(update_fields=['is_approved'])
-
-    if instance.role == "supplier" and instance.is_approved and not instance.supplier_qr:
-        from qr_generator.models import SupplierQR
-
-        supplier_qr = SupplierQR.objects.create(supplier=instance)
-        instance.supplier_qr = supplier_qr
-        instance.save(update_fields=['supplier_qr'])
-
-
-@receiver(post_save, sender=CustomUser)
-def log_user_save(sender, instance, created, **kwargs):
-    action = "created" if created else "updated"
-    UserActivityLog.objects.create(
-        user=instance,
-        action=f"User {instance.email} {action}",
-        ip_address=None,  # Adjust this if you have access to the IP address
-        additional_data={"user_id": instance.id},
-    )

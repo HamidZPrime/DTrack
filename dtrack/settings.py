@@ -23,18 +23,16 @@ SECRET_KEY = env("SECRET_KEY")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["dtrack.zprime.ai"])
 
 # Site URL
-SITE_URL = os.getenv('SITE_URL', 'http://localhost:8000')
+SITE_URL = env("SITE_URL")
 
 # Application definition
 INSTALLED_APPS = [
-    # Django default apps
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # Custom Apps
     "accounts",
     "certificates",
     "food_safety",
@@ -58,14 +56,14 @@ INSTALLED_APPS = [
     "profiles",
     "notification_templates",
     "twilio_app",
-    # Third-party apps (if any)
+    "storages",  # Required for S3
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # Place WhiteNoiseMiddleware here
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.locale.LocaleMiddleware",  # For multi-language support
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -75,7 +73,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "dtrack.urls"
 
-# Template configuration
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -83,7 +80,7 @@ TEMPLATES = [
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
-                "django.template.context_processors.debug",  # Remove in production if DEBUG=False
+                "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
@@ -94,7 +91,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "dtrack.wsgi.application"
 
-# Database configuration
+# Database configuration (using .env variables)
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -103,112 +100,52 @@ DATABASES = {
         "PASSWORD": env("DB_PASSWORD"),
         "HOST": env("DB_HOST"),
         "PORT": env("DB_PORT", default="5432"),
-        "CONN_MAX_AGE": 600,  # Keep connections open for performance
+        "CONN_MAX_AGE": 600,
         "OPTIONS": {
-            "sslmode": "require",  # Ensure SSL is enabled
+            "sslmode": "require",
         },
     }
 }
 
-# Password validation
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-        "OPTIONS": {
-            "min_length": 12,  # Increase minimum length for better security
-        },
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
-]
-
-# Internationalization and localization settings
-LANGUAGE_CODE = "en-us"
-
-LANGUAGES = [
-    ("en", "English"),
-    ("ar", "Arabic"),
-]
-
-LOCALE_PATHS = [
-    BASE_DIR / "locale",  # Path to store language translations
-]
-
-TIME_ZONE = "UTC"
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
-
-# Static files configuration
+# Static and Media Configuration
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-
-# Media files configuration
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# Static files storage
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Default primary key field type
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Custom user model
-AUTH_USER_MODEL = "accounts.CustomUser"
+# Amazon S3 Configuration
+AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_REGION_NAME = env("AWS_S3_REGION_NAME", "us-east-1")
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+AWS_QUERYSTRING_AUTH = False
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 
-# Email configuration
+# Email Configuration using Amazon SES
 EMAIL_BACKEND = env(
     "EMAIL_BACKEND",
     default="django.core.mail.backends.smtp.EmailBackend",
 )
-
-EMAIL_HOST = env("EMAIL_HOST", default="smtp.gmail.com")
+EMAIL_HOST = env("EMAIL_HOST", default="email-smtp.us-east-1.amazonaws.com")
 EMAIL_PORT = env.int("EMAIL_PORT", default=587)
 EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", default=True)
-EMAIL_HOST_USER = env("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")  # SMTP Username from Amazon SES
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")  # SMTP Password from Amazon SES
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="webmaster@dtrack.zprime.ai")
 
-# Twilio configuration
-TWILIO_ACCOUNT_SID = env("TWILIO_ACCOUNT_SID")
-TWILIO_AUTH_TOKEN = env("TWILIO_AUTH_TOKEN")
-TWILIO_PHONE_NUMBER = env("TWILIO_PHONE_NUMBER")
+# Security Settings
+SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=True)
+SECURE_HSTS_SECONDS = env.int("SECURE_HSTS_SECONDS", default=3600)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# Ensure Twilio credentials are set
-if not all([TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER]):
-    raise ValueError("Twilio credentials are not all set in environment variables.")
-
-# Authentication backends
-AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
-]
-
-# Security settings
-# SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=True)
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
-# SECURE_HSTS_SECONDS = env.int("SECURE_HSTS_SECONDS", default=3600)
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-# SECURE_HSTS_PRELOAD = True
-# SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
-# Content Security Policy (CSP)
-# You might need to install django-csp or similar middleware
-# CSP_DEFAULT_SRC = ("'self'",)
-# CSP_STYLE_SRC = ("'self'", "https://fonts.googleapis.com")
-# CSP_FONT_SRC = ("'self'", "https://fonts.gstatic.com")
-
-# Logging configuration
+# Logging Configuration (same as you have)
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -232,6 +169,3 @@ LOGGING = {
         },
     },
 }
-
-# Additional settings
-# Add any other settings specific to your project or third-party apps
