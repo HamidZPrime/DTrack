@@ -5,6 +5,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.permissions import AllowAny
 from django.http import HttpResponseRedirect
+from django.contrib.auth import views as auth_views
 from typing import Any
 
 # Swagger schema view configuration
@@ -31,6 +32,10 @@ urlpatterns = [
 
     # DRF authentication and browsable API
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
+
+    # Login and Logout URLs for Django authentication
+    path("accounts/login/", auth_views.LoginView.as_view(), name='login'),
+    path("accounts/logout/", auth_views.LogoutView.as_view(), name='logout'),
 
     # Swagger and ReDoc documentation URLs
     path("swagger/", schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
