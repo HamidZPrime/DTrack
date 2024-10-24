@@ -3,6 +3,7 @@ from django.contrib.auth.models import (
     BaseUserManager,
     PermissionsMixin,
     Permission,
+    Group,
 )
 from django.db import models
 from django.utils import timezone
@@ -14,13 +15,7 @@ from django.core.validators import RegexValidator
 from datetime import timedelta
 import uuid
 
-
 class CustomUserManager(BaseUserManager):
-    """
-    Custom manager for handling the creation of different user roles.
-    Includes helper methods to create standard users and superusers.
-    """
-
     def create_user(self, email: str, password: str = None, **extra_fields) -> "CustomUser":
         if not email:
             raise ValueError(_("The Email field must be set"))
@@ -41,7 +36,6 @@ class CustomUserManager(BaseUserManager):
         user.is_active = True  # Superusers are active by default
         user.save(using=self._db)
         return user
-
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     ROLE_CHOICES = (
@@ -71,7 +65,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         _("Phone Number"),
         max_length=15,
         blank=True,
-        null=True,  # Allow NULL values in the database
+        null=True,
         validators=[RegexValidator(r'^\+?1?\d{9,15}$', _("Enter a valid phone number."))],
     )
     is_active = models.BooleanField(_("Active"), default=False)
@@ -79,7 +73,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(_("Superuser Status"), default=False)
     language = models.CharField(
         _("Language"),
-        max_length=5,
+        max_length=7,  # Adjusted max_length
         default="en",
         choices=settings.LANGUAGES,
     )
@@ -102,6 +96,20 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         blank=True,
         related_name="supplier_user",
         verbose_name=_("Supplier QR Code"),
+    )
+
+    groups = models.ManyToManyField(
+        Group,
+        verbose_name=_("groups"),
+        blank=True,
+        related_name="customuser_set"  # Set a unique related_name
+    )
+
+    user_permissions = models.ManyToManyField(
+        Permission,
+        verbose_name=_("user permissions"),
+        blank=True,
+        related_name="customuser_permissions_set"  # Set a unique related_name
     )
 
     objects = CustomUserManager()
@@ -135,7 +143,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         self.email = self.email.lower()
         super().save(*args, **kwargs)
 
-
 def check_certificate_expiration(self) -> None:
     if self.role == "supplier":
         expired_certificates = self.certificate_set.filter(
@@ -147,9 +154,7 @@ def check_certificate_expiration(self) -> None:
             self.is_active = new_is_active
             self.save(update_fields=['is_active'])
 
-
 CustomUser.check_certificate_expiration = check_certificate_expiration
-
 
 class OperatorPermission(models.Model):
     operator = models.OneToOneField(
@@ -169,7 +174,6 @@ class OperatorPermission(models.Model):
 
     def __str__(self) -> str:
         return f"Permissions for {self.operator.get_full_name()}"
-
 
 class EmailVerificationToken(models.Model):
     user = models.ForeignKey(
@@ -208,7 +212,6 @@ class EmailVerificationToken(models.Model):
 
     def __str__(self) -> str:
         return f"Verification token for {self.user.email}"
-
 
 class UserActivityLog(models.Model):
     user = models.ForeignKey(
