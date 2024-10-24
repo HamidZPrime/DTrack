@@ -6,31 +6,28 @@
   <component name="ChangeListManager">
     <list default="true" id="76796761-ae8d-4476-ae4d-54be74a15b91" name="Changes" comment="Account Enhancement DTrack Z Prime">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/approval/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/audit_logs/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/certificates/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/compliance/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/custom_auth/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/apps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/forms.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/signals.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/accounts/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/accounts/password_reset.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/accounts/password_reset_complete.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/accounts/password_reset_confirm.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/accounts/password_reset_done.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/accounts/password_reset_email.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/accounts/password_reset_subject.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/accounts/register.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/templates/dashboard/base.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/templates/dashboard/home.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dtrack/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dtrack/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/file_management/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/food_safety/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventory/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification_templates/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notifications/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/payments/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/profiles/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/qr_generator/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/reports/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/supplier_management/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/support/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system_settings/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/task_scheduler/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/twilio_app/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user_management/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dtrack/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/dtrack/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/django.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/error.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qr_generator/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/qr_generator/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qr_generator/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/qr_generator/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,7 +158,7 @@
       <workItem from="1729674763184" duration="4628000" />
       <workItem from="1729757494806" duration="9061000" />
       <workItem from="1729781187652" duration="1528000" />
-      <workItem from="1729788860273" duration="5850000" />
+      <workItem from="1729788860273" duration="7268000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Project DTrack">
       <option name="closed" value="true" />
