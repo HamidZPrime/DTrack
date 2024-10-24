@@ -4,9 +4,10 @@ from django.conf.urls.static import static
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.permissions import AllowAny
+from typing import Any
 
 # Swagger schema view configuration
-schema_view = get_schema_view(
+schema_view: Any = get_schema_view(
     openapi.Info(
         title="DTrack API",
         default_version='v1',
@@ -20,16 +21,11 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    # Include DRF authentication and browsable API
+    # DRF authentication and browsable API
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
-
-    # Swagger documentation URLs
+    # Swagger and ReDoc documentation URLs
     path("swagger/", schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path("redoc/", schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-
-    # Add paths for your new REST API apps here, e.g.:
-    # path("users/", include("user_management.urls", namespace="user_management")),
-    # path("products/", include("inventory.urls", namespace="inventory")),
 ]
 
 # Serving media and static files during development

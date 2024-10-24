@@ -1,0 +1,6 @@
+2024-10-24 15:59:53,701 ERROR django.server You're accessing the development server over HTTPS, but it only supports HTTP.
+2024-10-24 15:59:53,702 ERROR django.server You're accessing the development server over HTTPS, but it only supports HTTP.
+2024-10-24 16:00:01,489 ERROR django.server You're accessing the development server over HTTPS, but it only supports HTTP.
+2024-10-24 16:00:01,489 ERROR django.server You're accessing the development server over HTTPS, but it only supports HTTP.
+2024-10-24 16:00:08,006 ERROR django.server You're accessing the development server over HTTPS, but it only supports HTTP.
+2024-10-24 16:00:08,007 ERROR django.server You're accessing the development server over HTTPS, but it only supports HTTP.

@@ -2,11 +2,18 @@ import os
 from pathlib import Path
 import environ
 from datetime import timedelta
-
+from django.utils.translation import gettext_lazy as _
 # Initialize environment variables
 env = environ.Env(
     DEBUG=(bool, False)
 )
+
+# Language Settings
+LANGUAGE_CODE = 'en'
+LANGUAGES = [
+    ('en', _('English')),
+    ('ar', _('Arabic')),
+]
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
@@ -62,6 +69,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django.middleware.locale.LocaleMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -71,6 +79,10 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
 ]
 
 ROOT_URLCONF = "dtrack.urls"
